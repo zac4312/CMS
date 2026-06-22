@@ -28,8 +28,10 @@ public class CMS_service {
        public final CMS_repository CMSaction;  public final elementGraphix_repo elementGraphix_action; public final txt2HTML convert;  
        public final user_repository usr_action; public final ImgHandling img_handling;
 
-    public CMS_service (CMS_repository act, txt2HTML con, ImgHandling iH, elementGraphix_repo eG_act, user_repository usr) { 
-        this.CMSaction = act; this.convert = con; this.img_handling = iH; this.elementGraphix_action = eG_act; this.usr_action = usr; 
+       public final SecretKey key;
+
+    public CMS_service (CMS_repository act, txt2HTML con, ImgHandling iH, elementGraphix_repo eG_act, user_repository usr, SecretKey k) { 
+        this.CMSaction = act; this.convert = con; this.img_handling = iH; this.elementGraphix_action = eG_act; this.usr_action = usr; this.key = k; 
     }
  
     public UUID saveImg(MultipartFile file, String usrID) throws Exception{
@@ -68,11 +70,12 @@ public class CMS_service {
     }
 
     public String login(String pw) throws Exception {
-            
-        String id = usr_action.login(pw);  
-        SecretKey key = Jwts.SIG.HS256.key().build();
         
-        String jws = Jwts.builder().subject(id).signWith(key).compact();
+        String id = usr_action.login(pw);   
+        String jws = Jwts.builder()
+            .subject(id)
+            .signWith(key)
+            .compact();
     
         return jws;
 

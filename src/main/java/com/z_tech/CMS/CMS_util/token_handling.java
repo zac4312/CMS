@@ -11,11 +11,11 @@ import io.jsonwebtoken.Jwts;
 
 @Component
 public class token_handling {
-    
+
+    public SecretKey key;
+
     public String decrypt_token(Header auth) {
-        Object claim = auth.get("authorization");  CharSequence claimStr = claim.toString().replaceAll("Bearer ", "");
-        SecretKey key = Jwts.SIG.HS256.key().build();
-        
+        Object claim = auth.get("authorization");  CharSequence claimStr = claim.toString().replaceAll("Bearer ", "");        
         Jws<Claims> token = Jwts.parser()
             .decryptWith(key)
             .build()
