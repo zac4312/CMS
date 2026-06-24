@@ -25,17 +25,21 @@ public class element_graphix {
 
     @NotNull
         public long file_size;
+    
+    @NotNull
+        public String original_file;
 
     public element_graphix Get_eGraphix() {
         return this;
     }
      
     public element_graphix() {}
-    public element_graphix(String parent_dir, String file_path, long file_size) {
+    public element_graphix(String parent_dir, long file_size, String name) {
 
         this.graphix_id = UUID.randomUUID();
         this.parent_dir = parent_dir;
-        this.file_path = file_path;
+        this.file_path = parent_dir + this.graphix_id.toString() + ".jpg";
         this.file_size = file_size;
+        this.original_file = name;
     }
 }
