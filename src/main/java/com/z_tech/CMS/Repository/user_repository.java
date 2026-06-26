@@ -12,6 +12,6 @@ import com.z_tech.CMS.Models.app_users;
 @Repository
 public interface user_repository extends JpaRepository<app_users, UUID> { 
     
-    @Query("Select user_id from app_users where password = :password")
+    @Query(value = "Select user_id from app_users where password = :password", nativeQuery = true)
     String login(@Param("password") String password);
 }

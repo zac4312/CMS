@@ -30,6 +30,12 @@ public class txt2HTML {
                     title                                                                    + "\n" +
                     description                                                              + "\n" +
 
+                    "<hr><hr>"                                                               + "\n" +
+                    "<div id='image'></div>"                                                 + "\n" +
+                    "<hr><hr>"                                                               + "\n" +
+
+                    "<script src='test.js'> </script>"                                       + "\n" +
+
                     "</body>"                                                                + "\n" +
                     "</html>"
                 );

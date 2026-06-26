@@ -55,6 +55,8 @@ dependencies {
 
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.13.0'
 
+    implementation("commons-io:commons-io:2.22.0")
+
 }
 
 tasks.named('test') {

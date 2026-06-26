@@ -5,21 +5,39 @@ import javax.crypto.SecretKey;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 
 @Component
 public class token_handling {
-
-    public String decrypt_token(String auth, SecretKey key) {
-        CharSequence claimStr = auth.replaceAll("Bearer ", "");        
-        Jws<Claims> token = Jwts.parser()
+/*
+    public String decrypt_token(String auth, SecretKey key) throws Exception {
+      try {
+        
+          CharSequence claimStr = auth.replaceAll("Bearer ", "");        
+            Claims token = Jwts.parser()
             .verifyWith(key)
             .build()
-            .parseSignedClaims(claimStr);
+            .parseSignedClaims(claimStr)
+            .getPayload();
 
-        String sub = token.getPayload().getSubject(); 
+        String sub = token.getSubject(); 
+        
+        return sub;
+    
+      } catch (Exception e) { System.out.println("token decryption err: "); e.printStackTrace(); }  
+
+       return ""; 
+    }
+*/
+    public String decrypt_token(String auth, SecretKey key) throws Exception {
+        CharSequence claimStr = auth.replaceAll("Bearer ", "");        
+            Claims token = Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(claimStr)
+                .getPayload();
+
+        String sub = token.getSubject();     
         return sub;
     }
-
 }
