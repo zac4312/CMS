@@ -18,4 +18,12 @@ public class app_users {
 
     @NotNull
     public String password;
+
+    public app_users(){}
+    public app_users(String name, String pw) {
+        this.password = pw;
+        this.username = name;
+    }
 }
+
+

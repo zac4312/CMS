@@ -14,4 +14,7 @@ public interface user_repository extends JpaRepository<app_users, UUID> {
     
     @Query(value = "Select user_id from app_users where password = :password", nativeQuery = true)
     String login(@Param("password") String password);
+
+    @Query(value = "insert into app_users (username, password) values (:username, :password) returning user_id", nativeQuery = true)
+    UUID new_client(@Param("username") String username, @Param("password") String password);
 }

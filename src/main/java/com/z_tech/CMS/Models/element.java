@@ -7,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "element")
@@ -19,9 +18,6 @@ public class element {
     public String title;
     public String description;
 
-    @NotNull
-    public UUID by_user; 
-
     public UUID graphix;
     
     public element GetElement() {
@@ -29,11 +25,10 @@ public class element {
     }
     
     public element() {}
-    public element(String title, String description, UUID graphix, UUID by_user ) {
+    public element(String title, String description, UUID graphix) {
         this.title = title;
         this.description = description;
         this.graphix = graphix;
-        this.by_user = by_user;
     }
 
 }

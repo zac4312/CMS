@@ -1,7 +1,5 @@
 package com.z_tech.CMS.Controllers;
 
-import java.util.UUID;
-
 import javax.crypto.SecretKey;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +16,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.z_tech.CMS.CMS_util.ImgHandling;
 import com.z_tech.CMS.CMS_util.token_handling;
+import com.z_tech.CMS.Models.app_users;
 import com.z_tech.CMS.Models.element;
 import com.z_tech.CMS.Service.CMS_service;
 
 @Controller
-@RequestMapping("/Item")
+@RequestMapping("/cms")
 public class CMS_controller {
     
     public final CMS_service service;    public final token_handling token_handling; public final ImgHandling img_handling;
@@ -31,8 +30,17 @@ public class CMS_controller {
 
     public CMS_controller(CMS_service s, token_handling t_h, SecretKey k, ImgHandling img) { this.service = s; this.token_handling = t_h; this.key = k; this.img_handling = img;}
 
+@PostMapping("/newUser")
+    public ResponseEntity<?> newUser(@RequestBody app_users user) throws Exception{
+       try {
+         service.newUser(user); 
+         return ResponseEntity.ok().body(null);
+
+       } catch (Exception e) { return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fail" + e); }
+    }
+
 @PostMapping("/usr_login")
-public ResponseEntity<?> usr_login(@RequestBody String password) {
+    public ResponseEntity<?> usr_login(@RequestBody String password) {
     
     try {
 
@@ -42,7 +50,7 @@ public ResponseEntity<?> usr_login(@RequestBody String password) {
     } catch (Exception e) { return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("FAIL" +  e); }
 
 }
-
+/*
 @PostMapping(value = "/upload_img", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
  public ResponseEntity<?> AddImg (
             @RequestPart("file") MultipartFile file,
@@ -60,18 +68,19 @@ public ResponseEntity<?> usr_login(@RequestBody String password) {
       return ResponseEntity.ok(eG);
 
     } catch (Exception e) {System.out.println("auth: " + auth); return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("FAIL FAIL FAIL: " + e); }
-}
+}*/
 
-@PostMapping("/page")
+@PostMapping(value = "/page", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> ShowPage(
-            @RequestBody element e, 
+            @RequestPart("element") element e,
+            @RequestPart("file") MultipartFile file, 
             @RequestHeader("Authorization") String auth) throws Exception{ 
 
         try {
             String user = token_handling.decrypt_token(auth, key);
-            service.newPage(e, user);
-
-        System.out.println(
+            service.newPage(e, file, user); 
+        
+            System.out.println(
                 "element added: "              + "\n" +
                   "user: "     + user          + "\n" + 
                   "desc: "     + e.description + "\n" +

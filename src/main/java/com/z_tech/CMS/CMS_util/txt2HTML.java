@@ -6,18 +6,18 @@ import java.io.IOException;
 
 import org.springframework.stereotype.Component;
 
-import com.z_tech.CMS.Models.element;
+import com.z_tech.CMS.DTO.pageData;
 
 @Component
 public class txt2HTML {
     
-    public void makePage(element e) throws Exception {
+    public void makePage(pageData d) throws Exception {
 
-        String title = String.format("<h4>" + e.title + "</h4>");
-        String description = String.format("</p>" + e.description + "</p>");
+        String title = String.format("<h4>" + d.page_title + "</h4>");
+        String description = String.format("</p>" + d.page_description + "</p>");
 
         String page = 
-            String.format(
+            String.format (
                     "<!DOCTYPE html>"                                                        + "\n" +
                     "<html lang='en'>"                                                       + "\n" +
                     "<head>"                                                                 + "\n" +
