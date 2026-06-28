@@ -6,15 +6,17 @@ public class pageData{
     
     public String page_title;
     public String page_description;
-    public String file_path;
+    public String img_path;
+    public String page_path;
     public UUID user_id;
     public UUID graphix_id;
 
     public pageData(){}
-    public pageData(String title, String description, String file_path, UUID uID, UUID gID) {
+    public pageData(String title, String description, String img_path, String page_path, UUID uID, UUID gID) {
         this.page_title = title;
         this.page_description = description;
-        this.file_path = file_path;
+        this.img_path = img_path;
+        this.page_path = page_path;
         this.user_id = uID;
         this.graphix_id = gID;
     }

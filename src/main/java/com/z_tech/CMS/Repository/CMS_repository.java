@@ -14,13 +14,11 @@ import com.z_tech.CMS.Models.pages;
 public interface CMS_repository extends JpaRepository<pages, UUID>{ 
 
     @Query
-    (value = "SELECT e.description, e.title, eg.file_path, eg.graphix_id, u.user_id FROM pages p LEFT JOIN element e ON p.elements = e.element_id LEFT JOIN element_graphix eg ON e.graphix = eg.graphix_id LEFT JOIN app_users u ON p.owned_by = u.user_id WHERE u.user_id = :userID and p.page_id = :page_id", nativeQuery = true)
+(value = "SELECT e.description, e.title, eg.file_path, p.path2stable, eg.graphix_id, u.user_id FROM pages p LEFT JOIN element e ON p.elements = e.element_id LEFT JOIN element_graphix eg ON e.graphix = eg.graphix_id LEFT JOIN app_users u ON p.owned_by = u.user_id WHERE u.user_id = :userID and p.page_id = :page_id", nativeQuery = true)
     pageData data (
             @Param("userID") UUID userID,
-            @Param("page_id") UUID pageID
+             @Param("page_id") UUID pageID
     ); 
-
-
 }
 
 

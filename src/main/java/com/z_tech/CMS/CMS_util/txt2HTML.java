@@ -15,6 +15,7 @@ public class txt2HTML {
 
         String title = String.format("<h4>" + d.page_title + "</h4>");
         String description = String.format("</p>" + d.page_description + "</p>");
+        String image = String.format( "<img src=" + d.img_path + ">");
 
         String page = 
             String.format (
@@ -29,6 +30,7 @@ public class txt2HTML {
 
                     title                                                                    + "\n" +
                     description                                                              + "\n" +
+                    image                                                                    + "\n" +
 
                     "<hr><hr>"                                                               + "\n" +
                     "<div id='image'></div>"                                                 + "\n" +
@@ -41,7 +43,7 @@ public class txt2HTML {
                 );
 
         try {
-            File f = new File("/var/www/html/CMS_test/page.html");
+            File f = new File(d.page_path);
             FileWriter writer = new FileWriter(f);
             writer.write(page); writer.close();
 

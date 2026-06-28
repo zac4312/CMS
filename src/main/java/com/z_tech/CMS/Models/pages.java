@@ -6,8 +6,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 
 @Entity
 @Table(name = "pages")
@@ -31,6 +29,6 @@ public class pages {
         this.elements = elements;
         this.owned_by = owned_by;
         this.parent_dir =String.format("/home/zacm/IOfiles/CMS/" + owned_by + "/pages/stable_file/");
-        this.path2stable = String.format(this.parent_dir + this.page_id.toString());
+        this.path2stable = String.format(this.parent_dir + this.page_id.toString()+".html");
     }
 }

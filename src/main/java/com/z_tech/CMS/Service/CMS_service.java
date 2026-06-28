@@ -109,7 +109,7 @@ public class CMS_service {
     
             System.out.println("Join query data: " + "\n" +
                     "graphix id: "+ data.graphix_id +"\n"+
-                    "graphix file path: " + data.file_path +"\n"+
+                    "graphix file path: " + data.img_path +"\n"+
                     "element title: " + data.page_title +"\n"+
                     "element description:  "+ data.page_description +"\n"+
                     "user Id " + data.user_id +"\n");
