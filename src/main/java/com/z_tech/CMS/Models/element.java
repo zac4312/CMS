@@ -17,18 +17,16 @@ public class element {
 
     public String title;
     public String description;
-
-    public UUID graphix;
     
     public element GetElement() {
         return this;
     }
     
     public element() {}
-    public element(String title, String description, UUID graphix) {
+    public element(String title, String description) {
+        this.element_id = UUID.randomUUID();
         this.title = title;
         this.description = description;
-        this.graphix = graphix;
     }
 
 }

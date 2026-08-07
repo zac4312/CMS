@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.z_tech.CMS.CMS_util.ImgHandling;
 import com.z_tech.CMS.CMS_util.token_handling;
+import com.z_tech.CMS.DTO.storage_dto;
 import com.z_tech.CMS.Models.app_users;
 import com.z_tech.CMS.Models.element;
 import com.z_tech.CMS.Service.CMS_service;
@@ -24,7 +25,8 @@ import com.z_tech.CMS.Service.CMS_service;
 @RequestMapping("/cms")
 public class CMS_controller {
     
-    public final CMS_service service;    public final token_handling token_handling; public final ImgHandling img_handling;
+    public final CMS_service service; public final token_handling token_handling; public final ImgHandling img_handling;
+
 @Autowired
        public final SecretKey key;
 
@@ -50,49 +52,39 @@ public class CMS_controller {
     } catch (Exception e) { return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("FAIL" +  e); }
 
 }
-/*
-@PostMapping(value = "/upload_img", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
- public ResponseEntity<?> AddImg (
-            @RequestPart("file") MultipartFile file,
-            @RequestHeader("Authorization") String auth 
-        ){
 
-    try {
-
-      String user = token_handling.decrypt_token(auth, key);
-
-        System.out.println("USER: " + user );
-
-      UUID eG = service.saveImg(file, user);
-
-      return ResponseEntity.ok(eG);
-
-    } catch (Exception e) {System.out.println("auth: " + auth); return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("FAIL FAIL FAIL: " + e); }
-}*/
-
-@PostMapping(value = "/page", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> ShowPage(
+@PostMapping(value = "/pre_confirmation", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> pre_confirmation(
             @RequestPart("element") element e,
             @RequestPart("file") MultipartFile file, 
-            @RequestHeader("Authorization") String auth) throws Exception{ 
-
+            @RequestHeader("Authorization") String auth) throws Exception { 
+        
         try {
             String user = token_handling.decrypt_token(auth, key);
-            service.newPage(e, file, user); 
-        
-            System.out.println(
-                "element added: "              + "\n" +
-                  "user: "     + user          + "\n" + 
-                  "desc: "     + e.description + "\n" +
-                  "title: "    + e.title       + "\n" +
-                  "graphix: "  + e.graphix     + "\n" 
-        );
+            storage_dto storage = service.staging(e, file, user);
 
-            return ResponseEntity.ok("goodz");
+            service.store_page(storage);
+            return ResponseEntity.ok(storage.page_id);
 
         } catch (Exception err) { return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("FAIL FAIL FAIL: " + err); }
     } 
-    
+
+@PostMapping(value = "/page-deployment")
+    public ResponseEntity<?> deployment(
+                @RequestHeader("Authorization") String auth,
+                @RequestBody String page 
+            ) throws Exception {
+        try {
+
+            System.out.println(page);
+
+            String user = token_handling.decrypt_token(auth, key);
+            service.deploy_page(user, page);
+        } catch (Exception e) { e.printStackTrace(); }
+
+        return ResponseEntity.ok("deployed");
+    }
+
 @PostMapping( value = "/image", produces = MediaType.IMAGE_JPEG_VALUE)
     public ResponseEntity<?> returnImage(@RequestPart("file_path") String file) throws Exception {
         try {

@@ -16,10 +16,7 @@ public class element_graphix {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
         public UUID graphix_id;
-
-    @NotNull
-        public String parent_dir;
-        
+       
     @Column(nullable = false, unique = true)
         public String file_path;
 
@@ -35,9 +32,7 @@ public class element_graphix {
      
     public element_graphix() {}
     public element_graphix(String parent_dir, long file_size, String name) {
-
         this.graphix_id = UUID.randomUUID();
-        this.parent_dir = parent_dir;
         this.file_path = parent_dir + this.graphix_id.toString() + ".jpg";
         this.file_size = file_size;
         this.original_file = name;

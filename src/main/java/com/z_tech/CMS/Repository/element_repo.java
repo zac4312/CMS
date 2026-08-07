@@ -12,11 +12,10 @@ import com.z_tech.CMS.Models.element;
 @Repository
 public interface element_repo extends JpaRepository<element, UUID> { 
 
-    @Query(value = "INSERT INTO element (title, description, graphix) values (:title, :description, :graphix) returning element_id", nativeQuery = true)
+    @Query(value = "INSERT INTO element (element_id, title, description) values (:element_id, :title, :description) returning element_id", nativeQuery = true)
     UUID newElement(
+            @Param("element_id") UUID element_id,
             @Param("title") String title,
-            @Param("description") String descripiton,
-            @Param("graphix") UUID graphix
+            @Param("description") String descripiton
         ); 
-
 }

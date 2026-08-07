@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ImgHandling {
 
     public void createUserDir(UUID userID) throws Exception {
-        Path p1 = Paths.get("/home/zacm/IOfiles/CMS/" + userID + "/pages/stable_file/");    
+        Path p1 = Paths.get("/home/zacm/IOfiles/CMS/" + userID + "/pages/stable_files/");    
         Path p2 = Paths.get("/home/zacm/IOfiles/CMS/" + userID + "/pages/past/");    
  
         try {
@@ -25,7 +25,7 @@ public class ImgHandling {
         } catch (IOException e) { System.out.println("User Directory has already been created"); e.printStackTrace(); }
     }
 
-    public void handleUpload(MultipartFile file, String file_path) throws Exception{
+    public void handleUpload(MultipartFile file, String file_path) throws Exception {
         String mime = file.getContentType();
         
         Path p = Paths.get(file_path); 
