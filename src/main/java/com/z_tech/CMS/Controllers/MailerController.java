@@ -5,6 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.z_tech.CMS.DTO.mailerData;
@@ -18,11 +19,11 @@ public class MailerController {
     public MailerController(MailService mailService) { this.mailer = mailService;}
 
 @PostMapping(value = "/send", consumes = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> send_mail(mailerData d) {
+    ResponseEntity<?> send_mail(@RequestBody mailerData mailer_data) {
         try {
-            mailer.sendPlainText(d);
+            mailer.sendPlainText(mailer_data);
             return ResponseEntity.ok("goods");   
-        } catch (Exception e) { return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("MAILER FAILED: " + e);  }
+        } catch (Exception e) { return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("");  }
    }
 
 }

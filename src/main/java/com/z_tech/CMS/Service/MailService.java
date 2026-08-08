@@ -16,9 +16,13 @@ public class MailService {
     }
 
     public void sendPlainText(mailerData d) {
+
+        System.out.println("sub: " + d.subject);
+        System.out.println("body: " + d.body);
+
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("mesias4388@gmail.com1");
-        message.setSubject(d.sub);
+        message.setTo("mesias4388@gmail.com");
+        message.setSubject(d.subject);
         message.setText(d.body);
 
         mailSender.send(message);
